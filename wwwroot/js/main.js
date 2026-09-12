@@ -19,81 +19,92 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. TEXT ANALYTICS
-    const btnAnalyzeText = document.getElementById('btn-analyze-text');
-    const btnSampleText = document.getElementById('btn-sample-text');
-    const inputText = document.getElementById('input-text');
-    const textResultsBody = document.getElementById('text-results-body');
+    // 2. CREATE TICKET & TRIAJE INTELIGENTE
+    const btnCreateTicket = document.getElementById('btn-create-ticket');
+    const btnSampleTicket = document.getElementById('btn-sample-ticket');
+    const ticketTitle = document.getElementById('ticket-title');
+    const ticketDesc = document.getElementById('ticket-desc');
+    const ticketResultsBody = document.getElementById('ticket-results-body');
 
-    btnSampleText.addEventListener('click', () => {
-        inputText.value = "Plataforma como Servicio (PaaS) es un entorno de desarrollo y despliegue completo en la nube. Con soluciones como Azure App Service y ASP.NET Core C#, los desarrolladores pueden enfocarse únicamente en construir su software e integrar modelos de Inteligencia Artificial mediante API REST. El proveedor de la nube gestiona la seguridad del servidor, parches del sistema operativo y escalado automático de forma excelente e innovadora.";
+    btnSampleTicket.addEventListener('click', () => {
+        ticketTitle.value = "Falla Crítica: Caída del Servidor de Base de Datos SQL";
+        ticketDesc.value = "Los usuarios no pueden ingresar al sistema. Marca error HTTP 500 y las transacciones de la base de datos están completamente bloqueadas en producción.";
     });
 
-    btnAnalyzeText.addEventListener('click', async () => {
-        const text = inputText.value.trim();
-        if (!text) {
-            alert('Por favor ingresa o carga un texto para analizar.');
+    btnCreateTicket.addEventListener('click', async () => {
+        const title = ticketTitle.value.trim();
+        const desc = ticketDesc.value.trim();
+
+        if (!title && !desc) {
+            alert('Por favor ingresa el título o la descripción del reporte de falla.');
             return;
         }
 
-        textResultsBody.innerHTML = `
+        ticketResultsBody.innerHTML = `
             <div class="placeholder-msg">
                 <i class="fa-solid fa-spinner fa-spin" style="color: var(--azure-cyan);"></i>
-                <p>Procesando texto mediante Azure Cloud AI Engine (.NET 8 C#)...</p>
+                <p>Enviando reporte a la API de Azure y clasificando ticket con IA...</p>
             </div>
         `;
 
         try {
-            const response = await fetch('/api/analyze-text', {
+            const response = await fetch('/api/tickets/create', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: text })
+                body: JSON.stringify({ title: title, description: desc })
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                renderTextResults(data);
+                renderTicketResults(data);
             } else {
-                textResultsBody.innerHTML = `<div class="alert alert-danger">${data.error || 'Error procesando texto.'}</div>`;
+                ticketResultsBody.innerHTML = `<div class="alert alert-danger">${data.error || 'Error creando ticket.'}</div>`;
             }
         } catch (err) {
             console.error(err);
-            textResultsBody.innerHTML = `<div class="alert alert-danger">Error de conexión con el servidor.</div>`;
+            ticketResultsBody.innerHTML = `<div class="alert alert-danger">Error de conexión con la API en Azure.</div>`;
         }
     });
 
-    function renderTextResults(data) {
-        let sentimentClass = data.sentiment === 'Positivo' ? 'text-green' : 'text-blue';
-        
-        let keywordsHtml = data.keywords.map(kw => `<span class="stat-badge"><i class="fa-solid fa-tag"></i> ${kw}</span>`).join('');
-        let insightsHtml = data.ai_insights.map(ins => `<li><i class="fa-solid fa-check-circle text-blue"></i> ${ins}</li>`).join('');
+    function renderTicketResults(data) {
+        let badgeColor = data.priority_color === 'danger' ? '#ef4444' : (data.priority_color === 'warning' ? '#f59e0b' : '#10b981');
 
-        textResultsBody.innerHTML = `
-            <div class="result-box">
-                <h4><i class="fa-solid fa-bullseye"></i> Resumen Ejecutivo</h4>
-                <p class="mt-2" style="font-size: 0.95rem; line-height: 1.5; color: #e5e7eb;">${data.summary}</p>
+        ticketResultsBody.innerHTML = `
+            <div class="result-box" style="border-left: 4px solid ${badgeColor};">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="stat-badge"><i class="fa-solid fa-hashtag"></i> ${data.ticket_id}</span>
+                    <span style="font-size: 0.8rem; color: #9ca3af;"><i class="fa-regular fa-clock"></i> ${data.timestamp}</span>
+                </div>
+                <h4 class="mt-2" style="font-size: 1.1rem; color: #ffffff;">${data.title}</h4>
+                <p style="font-size: 0.9rem; color: #9ca3af; margin-top: 0.3rem;">${data.description}</p>
             </div>
 
             <div class="grid-2col mt-3">
                 <div class="result-box">
-                    <span class="telemetry-item">Sentimiento Detectado:</span><br>
-                    <strong class="${sentimentClass}" style="font-size: 1.1rem;">${data.sentiment} (${data.sentiment_score}%)</strong>
+                    <span class="telemetry-item">Prioridad Asignada por IA:</span><br>
+                    <strong style="color: ${badgeColor}; font-size: 1.05rem;"><i class="fa-solid fa-triangle-exclamation"></i> ${data.priority}</strong>
                 </div>
                 <div class="result-box">
-                    <span class="telemetry-item">Métricas del Documento:</span><br>
-                    <strong>${data.word_count} Palabras / ${data.char_count} Caracteres</strong>
+                    <span class="telemetry-item">Categoría Detectada:</span><br>
+                    <strong style="color: var(--azure-cyan); font-size: 1rem;"><i class="fa-solid fa-folder-tree"></i> ${data.category}</strong>
                 </div>
             </div>
 
-            <div class="mt-3">
-                <label>Palabras Clave Identificadas:</label>
-                <div>${keywordsHtml}</div>
+            <div class="grid-2col mt-2">
+                <div class="result-box">
+                    <span class="telemetry-item">Estado Emocional del Usuario:</span><br>
+                    <strong style="color: #e5e7eb;">${data.sentiment}</strong>
+                </div>
+                <div class="result-box">
+                    <span class="telemetry-item">Tiempo Estimado de Resolución:</span><br>
+                    <strong style="color: #10b981;">${data.estimated_resolution}</strong>
+                </div>
             </div>
 
             <div class="result-box mt-3">
-                <h4><i class="fa-solid fa-lightbulb"></i> Diagnóstico de la Nube (PaaS C#)</h4>
-                <ul class="insight-list">${insightsHtml}</ul>
+                <h4 style="color: var(--azure-cyan);"><i class="fa-solid fa-lightbulb"></i> Solución Técnica Sugerida por la IA:</h4>
+                <p class="mt-2" style="font-size: 0.95rem; line-height: 1.5; color: #e5e7eb;">${data.ai_solution}</p>
             </div>
         `;
     }
@@ -133,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('image', file);
 
         visionResults.classList.remove('hidden');
-        visionDescription.innerText = 'Enviando imagen a Azure Computer Vision MLaaS (.NET C#)...';
+        visionDescription.innerText = 'Enviando captura de pantalla a Azure Computer Vision MLaaS...';
         visionTags.innerHTML = '';
 
         try {
@@ -149,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (err) {
             console.error(err);
-            visionDescription.innerText = 'Error al procesar la imagen.';
+            visionDescription.innerText = 'Error al procesar la captura de pantalla.';
         }
     }
 
@@ -188,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (err) {
             console.error(err);
-            liveStatusText.innerText = 'Servidor .NET Web API (Listo para desplegar a Azure App Service)';
+            liveStatusText.innerText = 'Servidor Smart-Support Helpdesk (Listo para Azure App Service)';
         }
     }
 });

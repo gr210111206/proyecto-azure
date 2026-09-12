@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Azure Cloud AI Hub | Plataforma como Servicio (PaaS .NET)</title>
+    <title>Smart-Support AI Desk | Plataforma PaaS en Azure</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -16,12 +16,12 @@
     <header class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <i class="fa-brands fa-microsoft azure-blue"></i>
-                <span class="logo-text">Azure AI Hub <small class="badge-paas">PaaS Azure C# / .NET</small></span>
+                <i class="fa-solid fa-headset azure-blue"></i>
+                <span class="logo-text">Smart-Support AI <small class="badge-paas">PaaS Azure .NET 8</small></span>
             </div>
             <nav class="nav-links">
-                <button class="nav-btn active" data-tab="tab-text"><i class="fa-solid fa-brain"></i> Análisis de Texto</button>
-                <button class="nav-btn" data-tab="tab-vision"><i class="fa-solid fa-eye"></i> Visión por IA</button>
+                <button class="nav-btn active" data-tab="tab-tickets"><i class="fa-solid fa-ticket"></i> Crear Ticket & Triaje</button>
+                <button class="nav-btn" data-tab="tab-vision"><i class="fa-solid fa-file-waveform"></i> Diagnóstico de Capturas</button>
                 <button class="nav-btn highlight" data-tab="tab-paas"><i class="fa-solid fa-cloud"></i> Arquitectura PaaS</button>
             </nav>
         </div>
@@ -30,8 +30,8 @@
     <!-- Main Hero Banner -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Demostración Práctica: Plataforma como Servicio (PaaS en .NET 8)</h1>
-            <p>Aplicación Web & API RESTful impulsada por Inteligencia Artificial y desplegada mediante <strong>Azure App Service (C# / .NET)</strong> con integración continua de GitHub.</p>
+            <h1>Smart-Support AI Desk: Sistema de Helpdesk en la Nube</h1>
+            <p>Plataforma de triaje y resolución inteligente de tickets de TI desplegada en <strong>Azure App Service (PaaS .NET 8)</strong> con integración continua de GitHub.</p>
             <div class="status-pill" id="live-status">
                 <span class="status-dot green"></span> Estado en Nube: <strong id="azure-status-text">Conectando a Azure App Service...</strong>
             </div>
@@ -41,57 +41,61 @@
     <!-- Main Container -->
     <main class="main-container">
 
-        <!-- TAB 1: ANÁLISIS DE TEXTO -->
-        <section id="tab-text" class="tab-content active">
+        <!-- TAB 1: CREAR TICKET & TRIAJE INTELIGENTE -->
+        <section id="tab-tickets" class="tab-content active">
             <div class="card-grid">
                 <div class="card glass-card">
                     <div class="card-header">
-                        <h2><i class="fa-solid fa-paragraph"></i> Análisis de Texto e Inteligencia de Contenido (.NET API)</h2>
-                        <p>Ingresa cualquier texto o artículo para procesarlo en tiempo real con Inteligencia Artificial.</p>
+                        <h2><i class="fa-solid fa-pen-to-square"></i> Registrar Nuevo Reporte de Falla</h2>
+                        <p>Describe el problema técnico. La API REST procesará la prioridad, sentimiento y solución con IA.</p>
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="input-text">Texto a analizar:</label>
-                            <textarea id="input-text" rows="6" placeholder="Ejemplo: Plataforma como Servicio (PaaS) es un entorno de desarrollo y despliegue completo en la nube con soluciones como Azure App Service y ASP.NET Core C#..."></textarea>
+                            <label for="ticket-title">Título o Asunto del Problema:</label>
+                            <input type="text" id="ticket-title" class="input-text" placeholder="Ej: Caída del servicio de base de datos MySQL en producción">
+                        </div>
+                        <div class="form-group">
+                            <label for="ticket-desc">Descripción Detallada de la Falla:</label>
+                            <textarea id="ticket-desc" rows="5" placeholder="Ej: Los usuarios no pueden iniciar sesión. Marca error HTTP 500 y la base de datos no responde a las consultas..."></textarea>
                         </div>
                         <div class="button-group">
-                            <button id="btn-analyze-text" class="btn btn-primary">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i> Analizar con API .NET en PaaS
+                            <button id="btn-create-ticket" class="btn btn-primary">
+                                <i class="fa-solid fa-robot"></i> Generar Ticket con Triaje IA
                             </button>
-                            <button id="btn-sample-text" class="btn btn-secondary">
-                                <i class="fa-solid fa-lightbulb"></i> Cargar Texto de Ejemplo
+                            <button id="btn-sample-ticket" class="btn btn-secondary">
+                                <i class="fa-solid fa-triangle-exclamation"></i> Cargar Falla Crítica de Ejemplo
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Resultados del Análisis -->
-                <div class="card glass-card result-card" id="text-results-card">
+                <!-- Resultados del Ticket -->
+                <div class="card glass-card result-card" id="ticket-results-card">
                     <div class="card-header">
-                        <h3><i class="fa-solid fa-chart-pie"></i> Diagnóstico e Insights de IA</h3>
+                        <h3><i class="fa-solid fa-clipboard-check"></i> Ticket Generado & Diagnóstico IA</h3>
                     </div>
-                    <div class="card-body" id="text-results-body">
+                    <div class="card-body" id="ticket-results-body">
                         <div class="placeholder-msg">
-                            <i class="fa-solid fa-robot"></i>
-                            <p>Haz clic en "Analizar con API .NET en PaaS" para ver la respuesta del servidor en tiempo real.</p>
+                            <i class="fa-solid fa-headset"></i>
+                            <p>Haz clic en "Generar Ticket con Triaje IA" para procesar el reporte en vivo con la API en Azure.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- TAB 2: VISIÓN POR IA -->
+        <!-- TAB 2: DIAGNÓSTICO DE CAPTURAS DE PANTALLA (MLaaS) -->
         <section id="tab-vision" class="tab-content">
             <div class="card glass-card">
                 <div class="card-header">
-                    <h2><i class="fa-solid fa-camera"></i> Análisis de Visión por Computadora & MLaaS (.NET API)</h2>
-                    <p>Sube una imagen o ingresa un enlace para procesarla mediante algoritmos de visión en la nube de Azure.</p>
+                    <h2><i class="fa-solid fa-camera"></i> Diagnóstico Visual de Capturas de Error (MLaaS)</h2>
+                    <p>Sube una captura de pantalla del mensaje de error para ser inspeccionada por la API de Visión en Azure.</p>
                 </div>
                 <div class="card-body">
                     <div class="upload-zone" id="drop-zone">
                         <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
-                        <h3>Arrastra y suelta una imagen aquí</h3>
-                        <p>o selecciona una de tu equipo (PNG, JPG, WEBP)</p>
+                        <h3>Arrastra y suelta una imagen de error aquí</h3>
+                        <p>o selecciona una captura de tu equipo (PNG, JPG, WEBP)</p>
                         <input type="file" id="image-file-input" accept="image/*" class="file-input">
                         <button class="btn btn-secondary mt-2" onclick="document.getElementById('image-file-input').click()">
                             <i class="fa-solid fa-folder-open"></i> Explorar Archivos
@@ -113,45 +117,45 @@
         <section id="tab-paas" class="tab-content">
             <div class="card glass-card">
                 <div class="card-header">
-                    <h2><i class="fa-solid fa-layer-group"></i> Matriz de Responsabilidad Compartida (PaaS .NET)</h2>
-                    <p>Demostración técnica de los requerimientos de la materia para la presentación en vivo.</p>
+                    <h2><i class="fa-solid fa-layer-group"></i> Matriz de Responsabilidad Compartida (PaaS en Azure)</h2>
+                    <p>Desglose de la arquitectura para la exposición y evaluación del profesor.</p>
                 </div>
                 <div class="card-body">
 
                     <!-- Metadatos en tiempo real -->
                     <div class="telemetry-box">
-                        <h3><i class="fa-solid fa-server"></i> Telemetría del Servidor en Azure App Service (.NET)</h3>
+                        <h3><i class="fa-solid fa-server"></i> Telemetría del Servidor PaaS en Azure App Service</h3>
                         <div class="grid-2col" id="telemetry-grid">
-                            <div class="telemetry-item"><span>Proveedor PaaS:</span> <strong id="t-provider">Azure App Service (.NET)</strong></div>
-                            <div class="telemetry-item"><span>Instancia / Sitio:</span> <strong id="t-appname">Cargando...</strong></div>
-                            <div class="telemetry-item"><span>Región Cloud:</span> <strong id="t-region">Cargando...</strong></div>
-                            <div class="telemetry-item"><span>Runtime de Ejecución:</span> <strong id="t-python">.NET 8.0 (C# ASP.NET Core)</strong></div>
+                            <div class="telemetry-item"><span>Proveedor Cloud:</span> <strong id="t-provider">Azure App Service (PaaS)</strong></div>
+                            <div class="telemetry-item"><span>Instancia del Sistema:</span> <strong id="t-appname">Cargando...</strong></div>
+                            <div class="telemetry-item"><span>Región DataCenter:</span> <strong id="t-region">Cargando...</strong></div>
+                            <div class="telemetry-item"><span>Entorno de Ejecución:</span> <strong id="t-python">.NET 8.0 (C# ASP.NET Core)</strong></div>
                             <div class="telemetry-item"><span>Plan de Servicio:</span> <strong id="t-sku">Free (F1 Layer)</strong></div>
-                            <div class="telemetry-item"><span>Sistema Operativo:</span> <strong id="t-os">Linux (Azure Managed Host)</strong></div>
+                            <div class="telemetry-item"><span>Sistema Operativo Host:</span> <strong id="t-os">Linux (Azure Managed Host)</strong></div>
                         </div>
                     </div>
 
                     <!-- Tabla de Responsabilidad -->
                     <div class="matrix-container mt-4">
-                        <h3 class="mb-3"><i class="fa-solid fa-scale-balanced"></i> Comparativa de Gestión PaaS</h3>
+                        <h3 class="mb-3"><i class="fa-solid fa-scale-balanced"></i> Responsabilidad en la Gestión del Helpdesk</h3>
                         <div class="matrix-grid">
                             <div class="matrix-col azure-col">
-                                <h4><i class="fa-brands fa-microsoft"></i> Gestionado por el Proveedor (Azure)</h4>
+                                <h4><i class="fa-brands fa-microsoft"></i> Gestionado por Azure (Proveedor PaaS)</h4>
                                 <ul id="list-azure-managed">
-                                    <li><i class="fa-solid fa-check text-green"></i> Datacenters y Redes Físicas</li>
-                                    <li><i class="fa-solid fa-check text-green"></i> Servidores y Virtualización (Hyper-V)</li>
-                                    <li><i class="fa-solid fa-check text-green"></i> Sistema Operativo y Parches</li>
-                                    <li><i class="fa-solid fa-check text-green"></i> .NET Runtime & Servidor Kestrel</li>
-                                    <li><i class="fa-solid fa-check text-green"></i> Escalamiento Automático</li>
+                                    <li><i class="fa-solid fa-check text-green"></i> Infraestructura de Servidores Físicos</li>
+                                    <li><i class="fa-solid fa-check text-green"></i> Sistema Operativo Host y Parches de Seguridad</li>
+                                    <li><i class="fa-solid fa-check text-green"></i> .NET 8 Runtime & Servidor Web Kestrel</li>
+                                    <li><i class="fa-solid fa-check text-green"></i> Auto-escalamiento en Picos de Usuarios</li>
+                                    <li><i class="fa-solid fa-check text-green"></i> Enrutamiento HTTPS y Certificados SSL</li>
                                 </ul>
                             </div>
                             <div class="matrix-col user-col">
-                                <h4><i class="fa-solid fa-user-gear"></i> Gestionado por el Cliente (Tú / Usuario)</h4>
+                                <h4><i class="fa-solid fa-user-gear"></i> Gestionado por el Cliente (Tú / Desarrollador)</h4>
                                 <ul id="list-user-managed">
-                                    <li><i class="fa-solid fa-code text-blue"></i> Código Fuente de la App (C# / ASP.NET Core)</li>
-                                    <li><i class="fa-solid fa-code text-blue"></i> Endpoints API REST e Integración IA</li>
-                                    <li><i class="fa-solid fa-code text-blue"></i> Interfaz Gráfica (HTML/CSS/JS)</li>
-                                    <li><i class="fa-solid fa-code text-blue"></i> Control de Versiones en GitHub</li>
+                                    <li><i class="fa-solid fa-code text-blue"></i> Código Fuente del Helpdesk (C# / .NET)</li>
+                                    <li><i class="fa-solid fa-code text-blue"></i> Lógica de Triaje de Tickets e IA</li>
+                                    <li><i class="fa-solid fa-code text-blue"></i> Interfaz Web de Usuario (HTML/CSS/JS)</li>
+                                    <li><i class="fa-solid fa-code text-blue"></i> Integración Continua desde GitHub</li>
                                 </ul>
                             </div>
                         </div>
@@ -165,8 +169,8 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>Proyecto PaaS .NET para Exposición e Investigación | Tecnológico Superior de Jalisco El Grullo</p>
-        <p><small>Desplegado dinámicamente desde GitHub a Azure App Service (C# / .NET 8 PaaS)</small></p>
+        <p>Smart-Support AI Desk | Proyecto PaaS para Exposición | Tecnológico Superior de Jalisco El Grullo</p>
+        <p><small>Desplegado dinámicamente desde GitHub a Azure App Service (PaaS Model)</small></p>
     </footer>
 
     <script src="js/main.js"></script>

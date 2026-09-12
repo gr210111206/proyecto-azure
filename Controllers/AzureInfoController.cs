@@ -10,7 +10,7 @@ namespace ProyectoAzure.Controllers
         [HttpGet]
         public IActionResult GetAzureInfo()
         {
-            var siteName = Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME") ?? "Azure-Local-Dev-Instance";
+            var siteName = Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME") ?? "Smart-Support-Helpdesk-Dev";
             var region = Environment.GetEnvironmentVariable("REGION_NAME") ?? "East US (Azure Default)";
             var sku = Environment.GetEnvironmentVariable("WEBSITE_SKU") ?? "Free (F1) / Shared";
             var dotnetVer = Environment.Version.ToString();
@@ -19,20 +19,20 @@ namespace ProyectoAzure.Controllers
             {
                 managed_by_azure = new[]
                 {
-                    "Infraestructura Física y Datacenters",
-                    "Servidores y Virtualización (Hyper-V)",
-                    "Sistema Operativo y Parches de Seguridad",
-                    "Entorno de Ejecución (.NET Core / C# Runtime)",
-                    "Escalamiento Automático y Balanceo de Carga",
-                    "Certificados SSL/TLS y Enrutamiento HTTPS"
+                    "Infraestructura Física de Datacenters y Energía Redundante",
+                    "Servidores Físicos y Capa de Virtualización Hyper-V",
+                    "Sistema Operativo Host (Linux/Windows) y Parches de Seguridad",
+                    "Entorno de Ejecución ASP.NET Core 8.0 (.NET Runtime)",
+                    "Balanceador de Carga y Auto-escalamiento en Picos de Tickets",
+                    "Certificación SSL/TLS HTTPS y Protección DDoS de Red"
                 },
                 managed_by_user = new[]
                 {
-                    "Código Fuente de la Aplicación (C# / ASP.NET Core)",
-                    "Lógica de Negocio e Integración con IA",
-                    "Diseño de Interfaz de Usuario (HTML/CSS/JS)",
-                    "Configuración de Variables de Entorno",
-                    "Repositorio de Código en GitHub (CI/CD)"
+                    "Código Fuente del Sistema Helpdesk (C# / ASP.NET Core)",
+                    "Lógica de Triaje de Tickets e Integración con Modelos de IA",
+                    "Interfaz Web de Usuario (HTML/CSS/JS con Glassmorphism)",
+                    "Configuración de Variables de Entorno de Soporte Técnico",
+                    "Repositorio de Código en GitHub y Canalización CI/CD"
                 }
             };
 
@@ -43,9 +43,9 @@ namespace ProyectoAzure.Controllers
                 app_name = siteName,
                 region = region,
                 sku = sku,
-                platform_type = "PaaS - Azure App Service (.NET)",
+                platform_type = "PaaS - Azure App Service (.NET 8)",
                 os = $"{RuntimeInformation.OSDescription}",
-                python_version = $".NET {dotnetVer} (C#)",
+                python_version = $".NET {dotnetVer} (C# ASP.NET Core)",
                 paas_responsibility_matrix = paasMatrix
             });
         }
