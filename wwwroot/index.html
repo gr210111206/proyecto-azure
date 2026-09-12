@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Cloud AI Hub | Plataforma como Servicio (PaaS .NET)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa-brands fa-microsoft azure-blue"></i>
+                <span class="logo-text">Azure AI Hub <small class="badge-paas">PaaS Azure C# / .NET</small></span>
+            </div>
+            <nav class="nav-links">
+                <button class="nav-btn active" data-tab="tab-text"><i class="fa-solid fa-brain"></i> Análisis de Texto</button>
+                <button class="nav-btn" data-tab="tab-vision"><i class="fa-solid fa-eye"></i> Visión por IA</button>
+                <button class="nav-btn highlight" data-tab="tab-paas"><i class="fa-solid fa-cloud"></i> Arquitectura PaaS</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Hero Banner -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Demostración Práctica: Plataforma como Servicio (PaaS en .NET 8)</h1>
+            <p>Aplicación Web & API RESTful impulsada por Inteligencia Artificial y desplegada mediante <strong>Azure App Service (C# / .NET)</strong> con integración continua de GitHub.</p>
+            <div class="status-pill" id="live-status">
+                <span class="status-dot green"></span> Estado en Nube: <strong id="azure-status-text">Conectando a Azure App Service...</strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <main class="main-container">
+
+        <!-- TAB 1: ANÁLISIS DE TEXTO -->
+        <section id="tab-text" class="tab-content active">
+            <div class="card-grid">
+                <div class="card glass-card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-paragraph"></i> Análisis de Texto e Inteligencia de Contenido (.NET API)</h2>
+                        <p>Ingresa cualquier texto o artículo para procesarlo en tiempo real con Inteligencia Artificial.</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="input-text">Texto a analizar:</label>
+                            <textarea id="input-text" rows="6" placeholder="Ejemplo: Plataforma como Servicio (PaaS) es un entorno de desarrollo y despliegue completo en la nube con soluciones como Azure App Service y ASP.NET Core C#..."></textarea>
+                        </div>
+                        <div class="button-group">
+                            <button id="btn-analyze-text" class="btn btn-primary">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Analizar con API .NET en PaaS
+                            </button>
+                            <button id="btn-sample-text" class="btn btn-secondary">
+                                <i class="fa-solid fa-lightbulb"></i> Cargar Texto de Ejemplo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resultados del Análisis -->
+                <div class="card glass-card result-card" id="text-results-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-chart-pie"></i> Diagnóstico e Insights de IA</h3>
+                    </div>
+                    <div class="card-body" id="text-results-body">
+                        <div class="placeholder-msg">
+                            <i class="fa-solid fa-robot"></i>
+                            <p>Haz clic en "Analizar con API .NET en PaaS" para ver la respuesta del servidor en tiempo real.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: VISIÓN POR IA -->
+        <section id="tab-vision" class="tab-content">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-camera"></i> Análisis de Visión por Computadora & MLaaS (.NET API)</h2>
+                    <p>Sube una imagen o ingresa un enlace para procesarla mediante algoritmos de visión en la nube de Azure.</p>
+                </div>
+                <div class="card-body">
+                    <div class="upload-zone" id="drop-zone">
+                        <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                        <h3>Arrastra y suelta una imagen aquí</h3>
+                        <p>o selecciona una de tu equipo (PNG, JPG, WEBP)</p>
+                        <input type="file" id="image-file-input" accept="image/*" class="file-input">
+                        <button class="btn btn-secondary mt-2" onclick="document.getElementById('image-file-input').click()">
+                            <i class="fa-solid fa-folder-open"></i> Explorar Archivos
+                        </button>
+                    </div>
+
+                    <div id="vision-results" class="mt-4 hidden">
+                        <div class="alert alert-info">
+                            <h4><i class="fa-solid fa-circle-check"></i> Análisis de Visión Completado</h4>
+                            <p id="vision-description"></p>
+                            <div class="tag-cloud mt-2" id="vision-tags"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: ARQUITECTURA PAAS & MATRIZ DE RESPONSABILIDAD -->
+        <section id="tab-paas" class="tab-content">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-layer-group"></i> Matriz de Responsabilidad Compartida (PaaS .NET)</h2>
+                    <p>Demostración técnica de los requerimientos de la materia para la presentación en vivo.</p>
+                </div>
+                <div class="card-body">
+
+                    <!-- Metadatos en tiempo real -->
+                    <div class="telemetry-box">
+                        <h3><i class="fa-solid fa-server"></i> Telemetría del Servidor en Azure App Service (.NET)</h3>
+                        <div class="grid-2col" id="telemetry-grid">
+                            <div class="telemetry-item"><span>Proveedor PaaS:</span> <strong id="t-provider">Azure App Service (.NET)</strong></div>
+                            <div class="telemetry-item"><span>Instancia / Sitio:</span> <strong id="t-appname">Cargando...</strong></div>
+                            <div class="telemetry-item"><span>Región Cloud:</span> <strong id="t-region">Cargando...</strong></div>
+                            <div class="telemetry-item"><span>Runtime de Ejecución:</span> <strong id="t-python">.NET 8.0 (C# ASP.NET Core)</strong></div>
+                            <div class="telemetry-item"><span>Plan de Servicio:</span> <strong id="t-sku">Free (F1 Layer)</strong></div>
+                            <div class="telemetry-item"><span>Sistema Operativo:</span> <strong id="t-os">Linux (Azure Managed Host)</strong></div>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de Responsabilidad -->
+                    <div class="matrix-container mt-4">
+                        <h3 class="mb-3"><i class="fa-solid fa-scale-balanced"></i> Comparativa de Gestión PaaS</h3>
+                        <div class="matrix-grid">
+                            <div class="matrix-col azure-col">
+                                <h4><i class="fa-brands fa-microsoft"></i> Gestionado por el Proveedor (Azure)</h4>
+                                <ul id="list-azure-managed">
+                                    <li><i class="fa-solid fa-check text-green"></i> Datacenters y Redes Físicas</li>
+                                    <li><i class="fa-solid fa-check text-green"></i> Servidores y Virtualización (Hyper-V)</li>
+                                    <li><i class="fa-solid fa-check text-green"></i> Sistema Operativo y Parches</li>
+                                    <li><i class="fa-solid fa-check text-green"></i> .NET Runtime & Servidor Kestrel</li>
+                                    <li><i class="fa-solid fa-check text-green"></i> Escalamiento Automático</li>
+                                </ul>
+                            </div>
+                            <div class="matrix-col user-col">
+                                <h4><i class="fa-solid fa-user-gear"></i> Gestionado por el Cliente (Tú / Usuario)</h4>
+                                <ul id="list-user-managed">
+                                    <li><i class="fa-solid fa-code text-blue"></i> Código Fuente de la App (C# / ASP.NET Core)</li>
+                                    <li><i class="fa-solid fa-code text-blue"></i> Endpoints API REST e Integración IA</li>
+                                    <li><i class="fa-solid fa-code text-blue"></i> Interfaz Gráfica (HTML/CSS/JS)</li>
+                                    <li><i class="fa-solid fa-code text-blue"></i> Control de Versiones en GitHub</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Proyecto PaaS .NET para Exposición e Investigación | Tecnológico Superior de Jalisco El Grullo</p>
+        <p><small>Desplegado dinámicamente desde GitHub a Azure App Service (C# / .NET 8 PaaS)</small></p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
