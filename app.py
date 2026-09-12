@@ -151,6 +151,37 @@ def analyze_image():
         "ai_model": "Azure Computer Vision v3.2 / MLaaS"
     })
 
+@app.route('/api/docs', methods=['GET'])
+def get_api_docs():
+    """
+    Devuelve la documentación de la API REST en formato JSON.
+    Demuestra explícitamente el funcionamiento del backend como API en Azure PaaS.
+    """
+    return jsonify({
+        "service_name": "Azure AI Hub REST API",
+        "architecture_type": "PaaS RESTful Service",
+        "version": "1.0.0",
+        "endpoints": [
+            {
+                "endpoint": "/api/azure-info",
+                "method": "GET",
+                "description": "Devuelve telemetría en vivo del entorno Azure App Service y la Matriz de Responsabilidad Compartida."
+            },
+            {
+                "endpoint": "/api/analyze-text",
+                "method": "POST",
+                "payload_example": {"text": "Texto a procesar"},
+                "description": "API de Inteligencia Artificial para análisis de sentimiento, palabras clave y resumen ejecutivo."
+            },
+            {
+                "endpoint": "/api/analyze-image",
+                "method": "POST",
+                "payload_example": "multipart/form-data (archivo) o JSON {'url': 'https://...'}",
+                "description": "API de Visión por Computadora MLaaS."
+            }
+        ]
+    })
+
 if __name__ == '__main__':
     # Para desarrollo local en puerto 5000
     port = int(os.environ.get('PORT', 5000))
