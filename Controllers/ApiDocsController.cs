@@ -14,26 +14,27 @@ namespace ProyectoAzure.Controllers
                 service_name = "Smart-Support AI Desk REST API",
                 architecture_type = "PaaS RESTful Service (.NET 8)",
                 version = "1.0.0",
-                endpoints = new[]
+                endpoints = new object[]
                 {
                     new
                     {
                         endpoint = "/api/tickets/create",
                         method = "POST",
-                        payload_example = new { title = "Error 500 en Login", description = "No puedo ingresar al sistema de base de datos" },
+                        payload_example = (object)new { title = "Error 500 en Login", description = "No puedo ingresar al sistema de base de datos" },
                         description = "Crea un ticket de soporte técnico y procesa prioridad, sentimiento y solución con IA."
                     },
                     new
                     {
                         endpoint = "/api/azure-info",
                         method = "GET",
+                        payload_example = (object)"N/A (GET Request)",
                         description = "Devuelve la telemetría del servidor en Azure App Service y la Matriz de Responsabilidad Compartida PaaS."
                     },
                     new
                     {
                         endpoint = "/api/analyze-image",
                         method = "POST",
-                        payload_example = "multipart/form-data (captura de pantalla de error)",
+                        payload_example = (object)"multipart/form-data (captura de pantalla de error)",
                         description = "API MLaaS de Visión por Computadora para diagnóstico visual de fallas."
                     }
                 }

@@ -8,7 +8,7 @@ namespace ProyectoAzure.Controllers
     public class VisionAnalysisController : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> AnalyzeImage([FromForm] IFormFile? image, [FromBody] ImageAnalysisUrlRequest? urlRequest)
+        public IActionResult AnalyzeImage([FromForm] IFormFile? image, [FromBody] ImageAnalysisUrlRequest? urlRequest)
         {
             List<string> tags;
             string description;

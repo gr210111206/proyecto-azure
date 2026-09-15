@@ -7,8 +7,19 @@ namespace ProyectoAzure.Models
         public string Department { get; set; } = "TI / Soporte Técnico";
     }
 
+    public class TextAnalysisRequest
+    {
+        public string Text { get; set; } = string.Empty;
+    }
+
+    public class ImageAnalysisUrlRequest
+    {
+        public string Url { get; set; } = string.Empty;
+    }
+
     public class ImageErrorAnalysisRequest
     {
         public string Url { get; set; } = string.Empty;
     }
 }
+
