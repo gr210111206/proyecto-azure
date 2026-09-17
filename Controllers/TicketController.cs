@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProyectoAzure.Models;
-using System.Text.RegularExpressions;
+using System;
+using System.Linq;
 
 namespace ProyectoAzure.Controllers
 {
@@ -16,7 +17,10 @@ namespace ProyectoAzure.Controllers
                 return BadRequest(new { error = "Por favor ingresa la descripción del problema técnico para el ticket." });
             }
 
-            var fullText = $"{request.Title} {request.Description}".Trim();
+            var titleStr = string.IsNullOrWhiteSpace(request.Title) ? "Reporte de Falla en Sistema Cloud" : request.Title.Trim();
+            var descStr = string.IsNullOrWhiteSpace(request.Description) ? titleStr : request.Description.Trim();
+
+            var fullText = $"{titleStr} {descStr}".Trim();
             var textLower = fullText.ToLower();
 
             // AI Ticket Priority & Sentiment Detection
@@ -25,8 +29,15 @@ namespace ProyectoAzure.Controllers
             string sentiment;
             int estResolutionMinutes;
 
-            var criticalKeywords = new[] { "caída", "caida", "caido", "servidor", "bloqueado", "urgen", "grave", "500", "error fatal", "no responde", "perdid", "hackeo", "base de datos" };
-            var highKeywords = new[] { "lento", "fallo", "falla", "login", "acceso", "contraseña", "red", "internet", "impresora", "permiso" };
+            var criticalKeywords = new[] { 
+                "caída", "caida", "caido", "servidor", "bloqueado", "urgen", "grave", 
+                "500", "502", "504", "error fatal", "no responde", "perdid", "hackeo", 
+                "base de datos", "pasarela", "pago", "pagos", "gateway", "timeout" 
+            };
+            var highKeywords = new[] { 
+                "lento", "fallo", "falla", "login", "acceso", "contraseña", "red", 
+                "internet", "impresora", "permiso", "api", "conexion", "conexión" 
+            };
 
             int criticalScore = criticalKeywords.Count(k => textLower.Contains(k));
             int highScore = highKeywords.Count(k => textLower.Contains(k));
@@ -53,27 +64,37 @@ namespace ProyectoAzure.Controllers
                 estResolutionMinutes = 240;
             }
 
-            // Category Identification
+            // Category Identification & AI Solution Matching
             string category;
-            if (textLower.Contains("base de datos") || textLower.Contains("sql") || textLower.Contains("db"))
-                category = "Base de Datos & Almacenamiento";
-            else if (textLower.Contains("red") || textLower.Contains("internet") || textLower.Contains("wifi") || textLower.Contains("conexion"))
-                category = "Redes & Comunicaciones";
-            else if (textLower.Contains("login") || textLower.Contains("acceso") || textLower.Contains("contraseña") || textLower.Contains("password"))
-                category = "Autenticación & Cuentas";
-            else
-                category = "Sistemas & Aplicaciones Cloud";
-
-            // AI Recommended Solution
             string solution;
-            if (category.Contains("Base de Datos"))
-                solution = "Revisar el pool de conexiones en Azure SQL, verificar estados de transacciones bloqueadas y reiniciar el servicio de base de datos.";
-            else if (category.Contains("Redes"))
-                solution = "Verificar reglas de Firewall de Azure y NSG (Network Security Groups), comprobar latencia del gateway de red.";
-            else if (category.Contains("Autenticación"))
-                solution = "Forzar restablecimiento de token JWT / OAuth2 en Azure Active Directory (Microsoft Entra ID) y desbloquear cuenta.";
+
+            if (textLower.Contains("504") || textLower.Contains("502") || textLower.Contains("pasarela") || 
+                textLower.Contains("pago") || textLower.Contains("pagos") || textLower.Contains("gateway") || 
+                textLower.Contains("timeout") || textLower.Contains("api"))
+            {
+                category = "APIs & Pasarela de Pagos (Gateway)";
+                solution = "Verificar tiempo de espera (timeout) en Azure API Management, revisar estado de la pasarela de pagos externa e inspeccionar logs de respuesta HTTP 504 en Application Insights.";
+            }
+            else if (textLower.Contains("base de datos") || textLower.Contains("sql") || textLower.Contains("db") || textLower.Contains("mysql"))
+            {
+                category = "Base de Datos & Almacenamiento";
+                solution = "Revisar el pool de conexiones en Azure SQL, verificar estados de transacciones bloqueadas y optimizar consultas en la base de datos.";
+            }
+            else if (textLower.Contains("red") || textLower.Contains("internet") || textLower.Contains("wifi") || textLower.Contains("conexion") || textLower.Contains("conexión"))
+            {
+                category = "Redes & Comunicaciones Cloud";
+                solution = "Verificar reglas de Firewall de Azure y NSG (Network Security Groups), comprobar latencia de red y verificar el Gateway de entrada.";
+            }
+            else if (textLower.Contains("login") || textLower.Contains("acceso") || textLower.Contains("contraseña") || textLower.Contains("password") || textLower.Contains("token"))
+            {
+                category = "Autenticación & Cuentas (Entra ID)";
+                solution = "Forzar restablecimiento de token JWT / OAuth2 en Microsoft Entra ID (Azure AD) y verificar permisos de acceso a la cuenta.";
+            }
             else
-                solution = "Reiniciar el App Service en Azure Portal, purgar caché distribuida y verificar logs de aplicación en App Insights.";
+            {
+                category = "Sistemas & Aplicaciones Cloud";
+                solution = "Reiniciar el App Service en Azure Portal, purgar caché distribuida y verificar logs de la aplicación en Application Insights.";
+            }
 
             var randomId = new Random().Next(1000, 9999);
 
@@ -82,8 +103,8 @@ namespace ProyectoAzure.Controllers
                 status = "success",
                 ticket_id = $"TCK-AZURE-{randomId}",
                 timestamp = DateTime.UtcNow.ToString("g"),
-                title = string.IsNullOrEmpty(request.Title) ? "Reporte de Falla en Sistema Cloud" : request.Title,
-                description = request.Description,
+                title = titleStr,
+                description = descStr,
                 category = category,
                 priority = priority,
                 priority_color = priorityColor,
