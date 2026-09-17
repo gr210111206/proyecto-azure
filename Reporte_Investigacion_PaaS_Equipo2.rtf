@@ -1,0 +1,78 @@
+{\rtf1\ansi\ansicpg1252\deff0\nobrand\deflang2058{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil\fcharset0 Calibri;}}
+{\colortbl ;\red0\green75\red160;\red51\green51\red51;\red100\green100\red100;}
+\viewkind4\uc1
+
+\par\qd\b\fs32\cf1 INSTITUTO TECNOL\'d3GICO JOS\'c9 MARIO MOLINA PASQUEL Y HER\'cdNQUEZ\par
+\fs28 CAMPUS EL GRULLO \'dash INGENIER\'cdA INFORM\'c1TICA\par\par
+\fs26 REPORTE DE INVESTIGACI\'d3N Y APLICACI\'d3N PR\'c1CTICA\par
+\b0\fs24\cf2 Tema 1.4: Plataforma como Servicio (PaaS): Fundamentos, Arquitectura, Matriz de Responsabilidad Compartida, Integraci\'f3n con IA (MLaaS) y Despliegue en la Nube\par\par
+\b Asignatura:\b0  C\'f3mputo en la Nube (Unidad 1)\par
+\b Docente:\b0  Ing. Juan Carlos Garc\'eda Sep\'falveda\par
+\b Equipo Evaluado (Equipo 2):\b0  Fernando y Juli\'e1n\par
+\b Fecha de Entrega:\b0  16 de Septiembre de 2026\par
+\page
+
+\ql\b\fs28\cf1 1. INTRODUCCI\'d3N\par\par
+\b\fs22\cf2 Objeto y Tema del Documento:\b0\fs22  El presente documento de investigaci\'f3n aborda de manera rigurosa y anal\'edtica el modelo de servicio en la nube conocido como Plataforma como Servicio (PaaS - Platform as a Service). En el ecosistema del c\'f3mputo distribuido moderno, PaaS representa una abstracci\'f3n arquitect\'f3nica fundamental situada entre la Infraestructura como Servicio (IaaS) y el Software como Servicio (SaaS). El objetivo principal de este trabajo es examinar los fundamentos te\'f3ricos de PaaS, sus mecanismos de abstracci\'f3n de servidores, su Matriz de Responsabilidad Compartida, su integraci\'f3n con modelos de Inteligencia Artificial (AI-PaaS / MLaaS) y su aplicaci\'f3n mediante un ejercicio pr\'e1ctico real dentro del proveedor Microsoft Azure App Service utilizando C# y .NET 8.0.\par\par
+\b Contenido y Enfoque:\b0  El enfoque de este trabajo es te\'f3rico-pr\'e1ctico alineado a los est\'e1ndares de la ingenier\'eda inform\'e1tica. Inicia con la definici\'f3n formal del modelo emitida por el National Institute of Standards and Technology (NIST SP 800-145) y analiza los componentes clave del entorno de ejecuci\'f3n (runtimes, middleware, bases de datos gestionadas y anal\'edtica). Posteriormente, establece la matriz de responsabilidad compartida entre el proveedor de servicios en la nube (CSP) y el cliente desarrollador. Asimismo, se contrasta PaaS frente a IaaS, SaaS y tecnolog\'edas de alojamiento web tradicional como cPanel. Se explora la integraci\'f3n de PaaS con servicios cognitivos de Inteligencia Artificial (MLaaS) y se detalla la gu\'eda paso a paso de la demostraci\'f3n pr\'e1ctica en vivo con automatizaci\'f3n CI/CD desde GitHub.\par\par
+
+\b\fs28\cf1 2. DESARROLLO Y AN\'c1LISIS T\'c9CNICO\par\par
+\b\fs24\cf1 2.1 Concepto y Arquitectura de PaaS\par\b0\fs22\cf2
+La Plataforma como Servicio (PaaS) es un modelo de servicio en la nube en el cual un proveedor (como Microsoft Azure, AWS o Google Cloud) suministra un entorno de desarrollo, prueba, ejecuci\'f3n y administraci\'f3n completo y listo para usar bajo demanda (Mell & Grance, 2011). Este modelo abstrae la infraestructura subyacente (servidores f\'edsicos, componentes de red, hipervisores, almacenamiento y parches del sistema operativo), permitiendo a los ingenieros de software concentrarse exclusivamente en el dise\'f1o de algoritmos, la l\'f3gica de negocio y la codificaci\'f3n de aplicaciones.\par\par
+\b Componentes Principales de la Plataforma:\b0\par
+1. Entornos de Ejecuci\'f3n (Runtimes): Soporte nativo y preconfigurado para lenguajes de programaci\'f3n modernos como .NET 8 / ASP.NET Core, Python, Node.js, Java, Go y PHP.\par
+2. Middleware y Servicios de Integraci\'f3n: Capas de software para la gesti\'f3n de APIs REST, orquestaci\'f3n de flujos de trabajo (Azure Logic Apps) y mensajer\'eda orientada a microservicios (Azure Service Bus).\par
+3. Bases de Datos Gestionadas: Motores relacionales y NoSQL (ej. Azure SQL Database, Cosmos DB) provistos con alta disponibilidad, respaldos autom\'e1ticos y ajuste de rendimiento mediante IA.\par
+4. Herramientas de Anal\'edtica y Monitoreo: M\'e9tricas autom\'e1ticas de consumo de CPU/RAM, registros de aplicaci\'f3n, rastreo de solicitudes HTTP y detecci\'f3n de anomal\'edas en tiempo real (Azure Application Insights).\par\par
+
+\b\fs24\cf1 2.2 Tabla Comparativa: IaaS vs. PaaS vs. SaaS y PaaS vs. cPanel Tradicional\par\b0\fs22\cf2
+A. Comparativa de Modelos de Servicio en la Nube:\par
+- IaaS (Infraestructura): El cliente gestiona el Sistema Operativo, Runtime, Middleware, Datos y Aplicaci\'f3n. La nube gestiona Virtualizaci\'f3n, Servidores, Redes y Almacenamiento. Ejemplos: Azure VMs, AWS EC2.\par
+- PaaS (Plataforma): El cliente gestiona solo el C\'f3digo de la Aplicaci\'f3n y Datos. La nube gestiona Hardware, Red, SO Host, Runtime, Virtualizaci\'f3n y Parches. Ejemplos: Azure App Service, Render, AWS Beanstalk.\par
+- SaaS (Software): El cliente no gestiona ninguno (solo uso de la interfaz). La nube gestiona Infraestructura, Plataforma y Software completos. Ejemplos: Microsoft 365, Gmail, Salesforce.\par\par
+B. \'bfPor qu\'e9 PaaS no es como un cPanel tradicional?\par
+- cPanel (Hosting Tradicional): Entorno r\'edgido y monol\'edtico para sitios est\'e1ticos o PHP/MySQL compartidos. Requiere escalado manual e inflexible que provoca ca\'eddas ante picos imprevistos.\par
+- PaaS (Plataforma Moderna): Entorno flexible y modular estructurado para desacoplar APIs RESTful, bases de datos administradas y Auto-scaling autom\'e1tico en tiempo real con integraci\'f3n Git CI/CD.\par\par
+
+\b\fs24\cf1 2.3 Gesti\'f3n y Operaci\'f3n en PaaS\par\b0\fs22\cf2
+1. Ciclo de Vida del Software (CI/CD / Git Integration): PaaS se conecta directamente con repositorios (GitHub, GitLab, Azure Repos). Cada ejecuci\'f3n de git push desencadena autom\'e1ticamente la compilaci\'f3n, pruebas y publicaci\'f3n sin intervenci\'f3n manual.\par
+2. Escalamiento Autom\'e1tico (Auto-scaling):\par
+- Escalado Horizontal (Scale Out): Duplica o triplica autom\'e1ticamente las instancias durante picos de demanda.\par
+- Escalado Vertical (Scale Up): Asigna mayor capacidad de CPU o RAM al plan de forma transparente.\par
+3. Abstracci\'f3n de Servidores y Mantenimiento: El desarrollador se desliga por completo del aprovisionamiento de MVs y parches de seguridad, tareas asumidas al 100% por el proveedor bajo SLA.\par\par
+
+\b\fs24\cf1 2.4 Matriz de Responsabilidad Compartida en PaaS\par\b0\fs22\cf2
+- Responsabilidad del Cliente (Nosotros): C\'f3digo fuente de la aplicaci\'f3n, l\'f3gica de negocio, triaje e integraci\'f3n con IA, gesti\'f3n de accesos y protecci\'f3n de datos.\par
+- Responsabilidad del Proveedor (Azure): Seguridad f\'edsica del datacenter, mantenimiento del hardware, actualizaci\'f3n del SO host, disponibilidad de .NET 8, balanceo de carga y mitigaci\'f3n DDoS.\par\par
+
+\b\fs24\cf1 2.5 Casos de Uso e Integraci\'f3n con Inteligencia Artificial (AI-PaaS / MLaaS)\par\b0\fs22\cf2
+- Proveedores Principales: Azure App Service, AWS Elastic Beanstalk, Google App Engine, Render, Heroku.\par
+- MLaaS (Machine Learning as a Service): Servicios PaaS que permiten entrenar y consumir modelos de IA a trav\'e9s de APIs sin administrar cl\'fasteres de GPUs f\'edsicas.\par
+- Integraci\'f3n en Endpoints PaaS (Smart-Support AI Desk):\par
+1. NLP (Procesamiento de Lenguaje Natural): Triaje autom\'e1tico de tickets, clasificaci\'f3n de prioridad (P1/P2/P3), an\'e1lisis de sentimiento y generaci\'f3n de soluciones.\par
+2. Visi\'f3n por Computadora: Inspecci\'f3n visual de capturas de pantalla de error para diagnosticar fallas.\par\par
+
+\b\fs28\cf1 3. GU\'cdA DEL EJERCICIO PR\'c1CTICO EN VIVO (DEMOSTRACI\'d3N EN AZURE)\par\b0\fs22\cf2
+- Proveedor Nube: Microsoft Azure App Service (PaaS).\par
+- Tecnolog\'eda Backend: C# / .NET 8.0 (ASP.NET Core REST API).\par
+- Repositorio GitHub: https://github.com/gr210111206/proyecto-azure.git\par
+- URL de Producci\'f3n en Vivo: https://proyecto-azure-dbdxbse0g5c3ftb3.mexicocentral-01.azurewebsites.net\par\par
+Pasos de la Demostraci\'f3n en Consola:\par
+1. Muestra del repositorio en GitHub con el flujo de automatizaci\'f3n CI/CD (.github/workflows/main_proyecto-azure.yml).\par
+2. Ingreso al recurso en Azure Portal mostrando el estado En ejecuci\'f3n y la pila .NET 8.\par
+3. Demostraci\'f3n del Centro de Implementaci\'f3n (Deployment Center) sincronizado con GitHub.\par
+4. Prueba en vivo en la Web App: Registro de un reporte de falla, clasificaci\'f3n autom\'e1tica a prioridad CR\'cdTICA (P1) mediante IA e inspecci\'f3n de la telemetr\'eda PaaS.\par\par
+
+\b\fs28\cf1 4. CONCLUSI\'d3N\par\b0\fs22\cf2
+S\'edntesis e Ideas Personales: La Plataforma como Servicio (PaaS) representa la evoluci\'f3n natural de la ingenier\'eda de software en la nube, al eliminar la fricci\'f3n operativa que hist\'f3ricamente ralentizaba la entrega de sistemas digitales. Al delegar la administraci\'f3n del hardware, los sistemas operativos y los middleware al proveedor, los equipos de desarrollo logran una velocidad de innovaci\'f3n sin precedentes.\par\par
+Soluci\'f3n a la Problem\'e1tica Operativa: El modelo PaaS resuelve los problemas cr\'edticos del hospedaje tradicional (falta de escalabilidad y sobrecostos) as\'ed como la alta complejidad de gesti\'f3n manual en IaaS.\par\par
+Competencias Adquiridas: Adquirimos el dominio sobre el dise\'f1o modular de APIs en la nube, la interpretaci\'f3n operativa de la matriz de responsabilidad compartida, la configuraci\'f3n de pipelines CI/CD con GitHub Actions y la integraci\'f3n pragm\'e1tica de modelos AI-PaaS/MLaaS.\par\par
+
+\b\fs28\cf1 5. BIBLIOGRAF\'cdA (FORMATO APA 7ma EDICI\'d3N)\par\b0\fs22\cf2
+1. BCN Group. (2026). Azure Cloud Platform as a Service (Azure PaaS). BCN Infrastructure & Cloud Services. https://bcn.co.uk/infrastructure-and-cloud/azure-platform-services/\par
+2. IBM. (2024). \'bfQu\'e9 es PaaS? (Platform as a Service). IBM Think Topics. https://www.ibm.com/mx-es/think/topics/paas\par
+3. Mell, P., & Grance, T. (2011). The NIST Definition of Cloud Computing. National Institute of Standards and Technology (NIST Special Publication 800-145). https://doi.org/10.6028/NIST.SP.800-145\par
+4. Microsoft Azure. (2026). \'bfQu\'e9 es la plataforma como servicio (PaaS)?. Diccionario de Inform\'e1tica en la Nube de Azure. https://azure.microsoft.com/es-es/resources/cloud-computing-dictionary/what-is-paas\par
+5. Tecnol\'f3gico Superior de Jalisco El Grullo. (2026). R\'fabrica de Investigaciones. Carrera de Ingenier\'eda Inform\'e1tica.\par
+6. Troelsen, A., & Japikse, P. (2022). Pro C# 10 with .NET 6: Foundational Principles and Practices in Programming. Apress. https://doi.org/10.1007/978-1-4842-7869-7\par
+}
